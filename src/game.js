@@ -17,20 +17,29 @@ class Treasure {
 
   foundTreasure(player, treasure) {
     if (player.col === treasure.col && player.row === treasure.row) {
+      this.checkIfWon(player);
       return true;
     } else {
       return false;
     }
   }
+
+  checkIfWon(player) {
+    if (player.points === 4) {
+      alert(`${player.name} WON!!!`);
+      location.reload();
+    }
+  }
 }
 
 class Player {
-  constructor(col, row) {
+  constructor(col, row, name) {
     this.col = col;
     this.row = row;
     this.compass = 'S';
     this.image;
-    this.imageRight;
+    this.points = 0;
+    this.name = name;
   }
 
   draw() {
@@ -46,6 +55,10 @@ class Player {
     } else {
       image(this.imageUp, this.col, this.row, 50, 50);
     }
+  }
+
+  addPoint() {
+    this.points++;
   }
 
   moveUp() {
@@ -64,7 +77,7 @@ class Player {
 
 class Game {
   constructor() {
-    this.player = new Player(50, 50);
+    this.player = [new Player(50, 50, 'Player 1'), new Player(250, 250, 'Player 2')];
     this.treasure = new Treasure();
   }
 
